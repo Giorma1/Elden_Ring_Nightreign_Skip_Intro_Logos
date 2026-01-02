@@ -1,6 +1,6 @@
 #include <Windows.h>
 #include <vector>
-#include <psapi.h> // Needed for GetModuleInformation
+#include <psapi.h> 
 #include "pch.h"
 #include "ModUtils.h"
 // Link against psapi.lib
@@ -54,17 +54,17 @@ DWORD WINAPI MainThread(LPVOID lpParam)
     Sleep(100);
 
     
-    // The target CALL is the very last instruction in this pattern.
+    
     const char* pattern = "48 8b 90 ? ? ? ? 48 85 d2 74 ? c6 82 ? ? ? ? ? e8 ? ? ? ?";
 
-    // The target is 28 bytes (0x1C) from the start of the pattern
+    // The target is 243 bytes from the start of the pattern
     int offset = 243;
 
     uintptr_t patchAddress = FindPattern(GetModuleHandle(NULL), pattern, offset);
 
     if (patchAddress != 0)
     {
-        // Safety Check: Verify the byte at the address is actually a CALL (0xE8)
+        // Safety Check: Verify the byte at the address is actually a LEA
         if (*(unsigned char*)patchAddress == 0xE8)
         {
             DWORD oldProtect;
