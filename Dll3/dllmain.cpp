@@ -64,7 +64,7 @@ DWORD WINAPI MainThread(LPVOID lpParam)
 
     if (patchAddress != 0)
     {
-        // Safety Check: Verify the byte at the address is actually a LEA
+        // Safety Check: Verify the byte at the address is actually a CALL
         if (*(unsigned char*)patchAddress == 0xE8)
         {
             DWORD oldProtect;
